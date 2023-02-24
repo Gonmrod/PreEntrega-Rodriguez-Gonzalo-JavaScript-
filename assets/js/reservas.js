@@ -18,8 +18,7 @@ function mostrarMenu() {
       2. Eliminar una reserva
       3. Buscar una reserva
       4. Filtrar reservas
-      5. Salir del sistema
-      Seleccione una opción:`);
+      5. Salir del sistema`);
       
       if (opcion == 1){
         agregarReserva();
@@ -79,8 +78,8 @@ function eliminarReserva() {
   let dni = prompt("Ingrese el DNI del titular de la reserva que desea eliminar");
   let index = -1
 
-  for (let i = 0; i <reservas.length; i+=1) {
-    if (reservas[i].titularDNI === dni) {
+  for (let i = 0; i <reservas.listaReservas.length; i+=1) {
+    if (reservas.listaReservas[i].titularDNI === dni) {
       index = i
       break;
     }
@@ -88,7 +87,7 @@ function eliminarReserva() {
   if (index === -1) {
     alert("No se encontró reserva alguna con ese DNI");
   }else {
-    reservas.splice(index, 1);
+    reservas.listaReservas.splice(index, 1);
     alert("Reserva eliminada exitosamente");
   }
 return mostrarMenu();
@@ -100,8 +99,8 @@ function buscarReserva() {
   let dni = prompt("Ingrese el DNI del titular de la reserva que desea buscar");
   let index = -1;
 
-  for (let i = 0; i < reservas.length; i+=1) {
-    if(reservas[i].titularDNI === dni) {
+  for (let i = 0; i < reservas.listaReservas.length; i+=1) {
+    if(reservas.listaReservas[i].titularDNI === dni) {
       index = i;
       break;
     }
@@ -109,42 +108,35 @@ function buscarReserva() {
   if (index === -1) {
     alert("No se encontró ninguna reserva con ese DNI");
   }else {
-    alert(`Registro de reserva - Datos - Titular: ${reservas[index].titularNombre}, ${reservas[index].titularApellido} con DNI: ${reservas[index].titularDNI}. Para la fecha: ${reservas[index].fechaIngreso} hasta el día ${reservas[index].fechaEgreso}. Cantidad de personas: ${reservas[index].cantPersonas}`);
+    alert(`Registro de reserva - Datos - Titular: ${reservas.listaReservas[index].titularNombre}, ${reservas.listaReservas[index].titularApellido} con DNI: ${reservas.listaReservas[index].titularDNI}. Para la fecha: ${reservas.listaReservas[index].fechaIngreso} hasta el día ${reservas.listaReservas[index].fechaEgreso}. Cantidad de personas: ${reservas.listaReservas[index].cantPersonas}`);
   }
-return;
+return mostrarMenu();
 }
 
 //Creación de función filtrarReservas
 
 function filtrarReservas() {
-  const filtroFechaIngreso = prompt("Ingrese fecha de ingreso para filtrar (DD/MM/AAAA):");
-  const filtroFechaEgreso = prompt("Ingrese fecha de egreso para filtrar (DD/MM/AAAA):");
-  const filtroCantPersonas = Number(prompt("Ingrese cantidad de personas para filtrar:"));
+  let filtroFecha = prompt("Ingrese la fecha que desea buscar - DD/MM/AAAA");
+  let reservasFiltradas = [];
 
-  const reservasFiltradas = reservas.filter(reserva => 
-    reserva.fechaIngreso === filtroFechaIngreso &&
-    reserva.fechaEgreso === filtroFechaEgreso &&
-    reserva.cantPersonas === filtroCantPersonas
-  );
-
-  if (reservasFiltradas.length > 0) {
-    console.log(`Se encontraron ${reservasFiltradas.length} reservas que cumplen con los criterios de búsqueda:`);
-    console.table(reservasFiltradas);
-  } else {
-    console.log("No se encontraron reservas que cumplan con los criterios de búsqueda.");
+  for (let i = 0; i < reservas.listaReservas.length; i++) {
+    if (reservas.listaReservas[i].fechaIngreso === filtroFecha) {
+      reservasFiltradas.push(reservas.listaReservas[i]);
+    }
   }
-return;
+
+  if (reservasFiltradas.length === 0) {
+    alert("No se encontraron reservas para la fecha ingresada.");
+  } else {
+    let mensaje = `Reservas encontradas para la fecha ${filtroFecha}:\n\n`;
+    for (let i = 0; i < reservasFiltradas.length; i++) {
+      mensaje += `- Titular: ${reservasFiltradas[i].titularNombre}, ${reservasFiltradas[i].titularApellido} con DNI: ${reservasFiltradas[i].titularDNI}. Para la fecha: ${reservasFiltradas[i].fechaIngreso} hasta el día ${reservasFiltradas[i].fechaEgreso}. Cantidad de personas: ${reservasFiltradas[i].cantPersonas}\n\n`;
+    }
+    alert(mensaje);
+  }
+
+  return mostrarMenu();
 }
 
 //comienza el programa, llamando a la función mostrarMenu()
-
 mostrarMenu()
-
-/* let continuar = Number(prompt("¿Desea continuar operando el menú? 1. Si /// 2. No"));
-while (continuar !== 1 || continuar !== 2) {
-  if (continuar === 1) {
-    mostrarMenu()
-  } if(continuar === 2) {
-    alert("Saliendo del menú")
-  }
-} */
