@@ -90,7 +90,7 @@ function eliminarReserva() {
     reservas.listaReservas.splice(index, 1);
     alert("Reserva eliminada exitosamente");
   }
-return mostrarMenu();
+return;
 }
 
 
@@ -110,7 +110,7 @@ function buscarReserva() {
   }else {
     alert(`Registro de reserva - Datos - Titular: ${reservas.listaReservas[index].titularNombre}, ${reservas.listaReservas[index].titularApellido} con DNI: ${reservas.listaReservas[index].titularDNI}. Para la fecha: ${reservas.listaReservas[index].fechaIngreso} hasta el día ${reservas.listaReservas[index].fechaEgreso}. Cantidad de personas: ${reservas.listaReservas[index].cantPersonas}`);
   }
-return mostrarMenu();
+return;
 }
 
 //Creación de función filtrarReservas
@@ -135,7 +135,7 @@ function filtrarReservas() {
     alert(mensaje);
   }
 
-  return mostrarMenu();
+  return;
 }
 
 //comienza el programa, llamando a la función mostrarMenu()
